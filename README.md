@@ -29,4 +29,4 @@ This repository intentionally does **not** include real credentials or API keys.
 - `backend/php/config.php` is not fully committed.
 - API keys are left empty in source.
 
-Use `backend/php/config.example.php` as the template.
+Use `https://weather-dashboard-ak.rf.gd/backend/php/index.php` for a demonstration, however do not use real credentials.
