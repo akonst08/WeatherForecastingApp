@@ -26,7 +26,7 @@ A coursework web application that provides weather search, 24-hour forecast, map
 
 ## Security Note
 This repository intentionally does **not** include real credentials or API keys.
-- `backend/php/config.php` is not committed.
+- `backend/php/config.php` is not fully committed.
 - API keys are left empty in source.
 
 Use `backend/php/config.example.php` as the template.
