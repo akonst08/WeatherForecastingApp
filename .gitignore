@@ -1,0 +1,16 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Runtime artifacts
+*.log
+
+# Secrets
+*.env
+.env
+Tokens and API keys.docx
+
+# Build/cache
+node_modules/

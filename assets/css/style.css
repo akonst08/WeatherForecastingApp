@@ -1,0 +1,238 @@
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overscroll-behavior: none;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: sans-serif;
+    background:
+        linear-gradient(rgba(10, 24, 38, 0.2), rgba(10, 24, 38, 0.2)),
+        url("../images/sunset.jpg") center center / cover no-repeat fixed;
+    /* background-attachment: scroll; */
+    background-color: #0b1f33;
+}
+
+.form-card {
+    max-width: 880px;
+    background: rgba(235, 241, 248, 0.20);
+    border: 1px solid rgba(199, 210, 223, 0.75);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(17, 24, 39, 0.12);
+}
+
+.error-text {
+    min-height: 0;
+    color: red;
+    text-shadow: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    justify-content: center;
+}
+
+.btn-square {
+    width: calc(2.25rem + 2px);
+    height: calc(2.25rem + 2px);
+    padding: 0;
+    border-radius: 6px;
+}
+
+.form-control,
+.form-select {
+    min-height: calc(2.25rem + 2px);
+}
+body.modal-open {
+  padding-right: 0 !important;
+}
+
+.hero-title {
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-weight: 600;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.hero-subtitle {
+    color: #f5f7fb;
+    font-size: 0.95rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 767.98px) {
+    html {
+        background-attachment: scroll;
+    }
+
+    body {
+        background-attachment: scroll;
+    }
+
+    .form-card {
+        max-width: 100%;
+    }
+
+    .btn-wrap {
+        gap: 0.9rem !important;
+    }
+}
+
+.current-icon {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    display: block;
+}
+
+.current-summary {
+    flex-wrap: nowrap;
+}
+
+.current-icon-wrap,
+.current-main-info {
+    min-width: 0;
+}
+
+.current-main-info {
+    overflow-wrap: anywhere;
+}
+
+.current-summary>.current-icon-wrap,
+.current-summary>.current-main-info {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+.map-card .card-body {
+    display: flex;
+}
+
+#map {
+    flex: 1;
+    min-height: 340px;
+    height: 100%;
+}
+
+
+.results-tabs {
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+.results-tabs .nav-link {
+    border-radius: 8px 8px 0 0;
+    background: #0D6EFD;
+    color: #fff;
+    border: 1px solid #8fb9ff;
+
+}
+
+.results-tabs .nav-link.active {
+    background: #fff;
+    color: #0d6efd;
+    border-color: #8fb9ff #8fb9ff #fff;
+}
+
+.current-temp {
+    font-size: 3rem;
+    line-height: 1.2;
+    color: #212529;
+}
+
+.current-range {
+    font-size: 0.95rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.current-low,
+.current-low span {
+    color: rgb(0, 30, 255);
+}
+
+.current-high,
+.current-high span {
+    color: red;
+}
+
+.section-header {
+    background-color: #eef1f4;
+    border-bottom: 1px solid #d6dbe1;
+}
+
+.card-gauges-title,
+.card-gauges-quality,
+.card-gauges-graphs {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2b2f36;
+}
+
+.modal-metrics .metric-label,
+.aq-label {
+    font-size: 0.82rem;
+    color: black;
+    font-weight: 700;
+}
+
+.modal-metrics .metric-value,
+.aq-value {
+    font-weight: 400;
+    color: #1f2733;
+}
+
+.aq-item {
+    text-align: center;
+    padding: 0.35rem 0.2rem;
+}
+
+@media (max-width: 575.98px) {
+    .current-icon {
+        width: 92px;
+        height: 92px;
+    }
+
+    .current-range {
+        font-size: 0.82rem;
+    }
+
+    .current-temp {
+        font-size: 2.1rem;
+    }
+
+    #rightNowTab .table {
+        table-layout: fixed;
+    }
+
+    #rightNowTab .table td {
+        word-break: break-word;
+    }
+}
+
+  #authTitle,
+  #toggleAuth,
+  #authMsg,
+  #loginForm label,
+  #signupForm label {
+    color: #fff;
+  }
+
+  #toggleAuth {
+    text-decoration: none;
+  }
+
+  #toggleAuth:hover {
+    text-decoration: underline;
+    color: #fff !important;
+  }

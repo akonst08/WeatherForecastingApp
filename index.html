@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Advanced Weather Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.8.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v10.8.0/dist/ol.js" defer></script>
+    <script src="https://cdn.plot.ly/plotly-3.3.0.min.js" defer> </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
+        defer></script>
+    <script src="assets/js/script.js" defer></script>
+</head>
+
+<body>
+    <main class="container py-3 py-md-4">
+        <h1 class="hero-title text-center mb-1">Advanced Weather Dashboard</h1>
+        <p class="hero-subtitle text-center mb-3">* The ultimate weather guide *</p>
+
+        <div class="form-card card border-0 p-3 p-md-4 mx-auto">
+            <div class="d-flex justify-content-end mb-2">
+                <a href="backend/php/index.php?logout=1" class="btn btn-danger btn-sm">Logout</a>
+            </div>
+            <form id="searchForm" novalidate>
+                <div class="row g-2 align-items-start">
+                    <div class="col-12 col-md-3">
+                        <label for="region" class="visually-hidden">Region</label>
+                        <input type="text" id="region" class="form-control" placeholder="Enter region">
+                        <div id="regionError" class="error-text mt-1"></div>
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <label for="city" class="visually-hidden">City</label>
+                        <select id="city" class="form-select">
+                            <option value="" selected>Select city</option>
+                            <option>Nicosia</option>
+                            <option>Limassol</option>
+                            <option>Larnaca</option>
+                            <option>Paphos</option>
+                            <option>Famagusta</option>
+                        </select>
+                        <div id="cityError" class="error-text mt-1"></div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label for="country" class="visually-hidden">Country</label>
+                        <select id="country" class="form-select">
+                            <option value="" selected>Select country</option>
+                            <option value="Cyprus">Cyprus</option>
+                            <option value="Greece">Greece</option>
+                            <option value="Turkey">Turkey</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                        </select>
+                        <div id="countryError" class="error-text mt-1"></div>
+                    </div>
+                    
+                    <div class="col-12 col-md-2">
+                        <div class="btn-wrap d-flex gap-2 justify-content-md-start justify-content-center">
+                            <button type="button" id="searchBtn" class="btn btn-primary btn-square btn-icon"
+                                title="Search">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                                <span class="visually-hidden">Search</span>
+                            </button>
+                            <button type="button" id="clearBtn" class="btn btn-danger btn-square btn-icon"
+                                title="Clear">
+                                <i class="fas fa-ban" aria-hidden="true"></i>
+                                <span class="visually-hidden">Clear</span>
+                            </button>
+                            <button type="button" id="logBtn" class="btn btn-warning btn-square btn-icon text-dark"
+                                title="Log">
+                                <i class="fas fa-server" aria-hidden="true"></i>
+                                <span class="visually-hidden">Log</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <hr id="resultsTopDivider" class="my-4 d-none">
+
+        <section id="resultsSection" class="d-none mt-4">
+            <ul class="nav nav-tabs results-tabs mb-0" id="weatherTabs" role="tablist">
+                <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#rightNowTab"
+                        type="button">Right Now</button></li>
+                <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#next24Tab"
+                        type="button">Next 24 hours</button></li>
+            </ul>
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+
+
+                    <div class="tab-content p-3 bg-white rounded-bottom">
+                        <div id="rightNowTab" class="tab-pane fade show active">
+                            <div class="row g-3">
+                                <div class="col-12 col-lg-6">
+                                    <div class="card border-0 shadow-sm h-100">
+                                        <div class="card-body">
+                                            <div class="col-12">
+                                                <div
+                                                    class="current-summary d-flex align-items-start justify-content-between gap-3">
+                                                    <div
+                                                        class="current-icon-wrap col-md-6 justify-content-center d-flex">
+                                                        <img id="currentIcon" class="current-icon" src=""
+                                                            alt="Weather icon">
+                                                    </div>
+
+                                                    <div class="current-main-info text-center flex-grow-1 col-md-6">
+                                                        <div class="text-muted fw-normal small">
+                                                            <span id="currentCondition">N.A.</span>
+                                                            &nbsp;in&nbsp;
+                                                            <span id="currentLocation">N.A.</span>
+                                                        </div>
+                                                        <div class="current-temp"><span id="currentTemp">N.A.</span>
+                                                        </div>
+                                                        <div class="current-range">
+                                                            <span class="current-low">L:<span
+                                                                    id="currentMin">N.A.</span></span>
+                                                            &nbsp;|&nbsp;
+                                                            <span class="current-high">H:<span
+                                                                    id="currentMax">N.A.</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <table class="table table-sm mb-0 text-center">
+                                                <tbody>
+                                                    <tr class="table-secondary">
+                                                        <td class="w-50">Pressure</td>
+                                                        <td class="w-50" id="currentPressure">N.A.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-50">Humidity</td>
+                                                        <td class="w-50" id="currentHumidity">N.A.</td>
+                                                    </tr>
+                                                    <tr class="table-secondary">
+                                                        <td class="w-50">Wind Speed</td>
+                                                        <td class="w-50" id="currentWind">N.A.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-50">Cloud Cover</td>
+                                                        <td class="w-50" id="currentCloud">N.A.</td>
+                                                    </tr>
+                                                    <tr class="table-secondary">
+                                                        <td class="w-50">Sunrise</td>
+                                                        <td class="w-50" id="currentSunrise">N.A.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="w-50">Sunset</td>
+                                                        <td class="w-50" id="currentSunset">N.A.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="card border-0 shadow-sm h-100 map-card">
+                                        <div class="card-body p-0">
+                                            <div id="map"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div id="next24Tab" class="tab-pane fade">
+                            <div class="table-responsive">
+                                <table class="table table-striped align-middle text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Summary</th>
+                                            <th>Temp</th>
+                                            <th>Cloud Cover</th>
+                                            <th>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="next24Body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="forecastModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 id="forecastModalTitle" class="modal-title">Weather details</h5>
+                                        <button type="button" class="btn-close " data-bs-dismiss="modal"
+                                            onclick="document.getElementById('logBtn').focus()"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row align-items-center g-2 mb-3">
+                                            <div class="col-6 text-center">
+                                                <img id="modalIcon" src="" alt="icon" width="64" height="64">
+                                            </div>
+                                            <div class="col-6">
+                                                <div id="modalMainText">N.A.</div>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2 text-center modal-metrics">
+                                            <div class="col-4">
+                                                <div class="metric-label">Humidity</div>
+                                                <div id="modalHumidity" class="metric-value">N.A.</div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="metric-label">Pressure</div>
+                                                <div id="modalPressure" class="metric-value">N.A.</div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="metric-label">Wind Speed</div>
+                                                <div id="modalWind" class="metric-value">N.A.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                            onclick="this.blur()">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="logModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Last 5 Requests</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            onclick="this.blur()"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm align-middle text-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <!-- <th>Username</th> -->
+                                                        <th>Time</th>
+                                                        <th>Region</th>
+                                                        <th>City</th>
+                                                        <th>Country</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="logBody">
+                                                    <tr>
+                                                        <td colspan="4">No log data yet.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                            onclick="document.getElementById('logBtn').focus()">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 right-now-extra">
+
+            <div class="card mb-4 border-0 shadow-sm right-now-extra">
+                <div class="card-header section-header">
+                    <h5 class="card-gauges-title mb-0">Maximum Forecast Values (5 days)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-12 col-lg-4">
+                            <div id="gaugeTemp" style="min-height:260px;"></div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div id="gaugeHumidity" style="min-height:260px;"></div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div id="gaugePressure" style="min-height:260px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4 border-0 shadow-sm right-now-extra">
+                <div class="card-header section-header">
+                    <h5 class="card-gauges-graphs mb-0">Forecast Line Charts (5 days)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-12 col-lg-4">
+                            <div id="chartTemp" style="min-height:260px;"></div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div id="chartHumidity" style="min-height:260px;"></div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div id="chartPressure" style="min-height:260px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 right-now-extra">
+
+            <div class="card border-0 shadow-sm right-now-extra">
+                <div class="card-header section-header">
+                    <h5 class="card-gauges-quality mb-0">Air Quality for N.A., N.A.</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row row-cols-2 row-cols-lg-4 g-3 aq-grid">
+                        <div class="col">
+                            <div class="aq-item">
+                                <div class="aq-label">AQI</div>
+                                <div id="aqiValue" class="aq-value">N.A.</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="aq-item">
+                                <div class="aq-label">PM2.5</div>
+                                <div id="aqPm25" class="aq-value">N.A.</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="aq-item">
+                                <div class="aq-label">PM10</div>
+                                <div id="aqPm10" class="aq-value">N.A.</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="aq-item">
+                                <div class="aq-label">CO</div>
+                                <div id="aqCo" class="aq-value">N.A.</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="aq-item">
+                                <div class="aq-label">NO<sub>2</sub></div>
+                                <div id="aqNo2" class="aq-value">N.A.</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="aq-item">
+                                <div class="aq-label">O<sub>3</sub></div>
+                                <div id="aqO3" class="aq-value">N.A.</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="aq-item">
+                                <div class="aq-label">SO<sub>2</sub></div>
+                                <div id="aqSo2" class="aq-value">N.A.</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="aq-item">
+                                <div class="aq-label">Dew</div>
+                                <div id="aqDew" class="aq-value">N.A.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</body>
+
+</html>
