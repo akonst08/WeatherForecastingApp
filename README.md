@@ -1,33 +1,32 @@
 # Weather Forecasting Dashboard
 
-A web-based weather dashboard built for coursework, featuring authentication, current conditions, 24-hour forecast visualization, map overlays, and request logging.
+A coursework web application that provides weather search, 24-hour forecast, map overlays, and basic user authentication/logging.
 
 ## Tech Stack
 - Frontend: HTML, CSS (Bootstrap), JavaScript
 - Backend: PHP
-- Data/API: OpenWeather API, WAQI API, Countries API
-- Storage: MySQL (remote university DB in original coursework setup)
+- Database: MySQL
+- External APIs: OpenWeather, WAQI, Countries API
 
 ## Project Structure
 - `index.html` - Main dashboard UI
-- `assets/css/` - Stylesheets
-- `assets/js/` - Frontend logic
-- `assets/images/` - Static images
-- `backend/php/` - Authentication and API endpoints
-- `data/` - Supporting static JSON data
-- `docs/` - Coursework document(s)
+- `assets/` - CSS, JavaScript, images
+- `backend/php/` - Authentication and backend endpoints
+- `data/` - Static support data
 
-## Run Locally
-1. Use a local PHP server (XAMPP/WAMP or `php -S`).
-2. Open `index.html` through the server.
-3. Ensure backend endpoints in `backend/php/` can access a valid MySQL database.
+## How It Works (Brief)
+1. Users authenticate through PHP endpoints.
+2. Frontend requests current/forecast weather data and renders charts/map/cards.
+3. Backend stores and returns recent request history per user.
 
-## Notes
-- The original coursework used university-hosted database credentials.
-- Replace hardcoded API keys and DB credentials before public deployment.
+## Local/Hosting Setup
+- Configure DB credentials in `backend/php/config.php`.
+- Configure API keys in `assets/js/script.js`.
+- Serve with a PHP-capable host (e.g., InfinityFree/XAMPP).
 
+## Security Note
+This repository intentionally does **not** include real credentials or API keys.
+- `backend/php/config.php` is not committed.
+- API keys are left empty in source.
 
-## Deployment Config
-- Copy ackend/php/config.example.php to ackend/php/config.php and fill database credentials.
-- Set API keys in ssets/js/script.js (OPENWEATHER_KEY, WAQI_TOKEN).
-
+Use `backend/php/config.example.php` as the template.
