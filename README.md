@@ -25,3 +25,9 @@ A web-based weather dashboard built for coursework, featuring authentication, cu
 ## Notes
 - The original coursework used university-hosted database credentials.
 - Replace hardcoded API keys and DB credentials before public deployment.
+
+
+## Deployment Config
+- Copy ackend/php/config.example.php to ackend/php/config.php and fill database credentials.
+- Set API keys in ssets/js/script.js (OPENWEATHER_KEY, WAQI_TOKEN).
+

@@ -1,6 +1,12 @@
 <?php
 header("Content-Type: application/json; charset=utf-8");
-$conn = mysqli_connect(getenv("DB_HOST"), getenv("DB_USER"), getenv("DB_PASS"), getenv("DB_NAME"));
+$configPath = __DIR__ . '/config.php';
+if (file_exists($configPath)) { require_once $configPath; }
+$dbHost = defined('DB_HOST') ? DB_HOST : getenv('DB_HOST');
+$dbUser = defined('DB_USER') ? DB_USER : getenv('DB_USER');
+$dbPass = defined('DB_PASS') ? DB_PASS : getenv('DB_PASS');
+$dbName = defined('DB_NAME') ? DB_NAME : getenv('DB_NAME');
+$conn = mysqli_connect($dbHost, $dbUser, $dbPass, $dbName);
 if (!$conn) {
     http_response_code(500);
     echo json_encode(["error" => "Database connection failed: " . mysqli_connect_error()]);
@@ -74,3 +80,4 @@ if ($method === "POST"){
 mysqli_close($conn);
 exit;
 ?>
+
